@@ -1,0 +1,80 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+  Linking,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import Colors from "../../../Shared/Colors";
+import GoogleMapView from "../../Home/GoogleMapView";
+import PlaceDetailItem from "./PlaceDetailItem";
+
+export default function PlaceDetail() {
+  const param = useRoute().params;
+  const [place, setPlace] = useState([]);
+
+  useEffect(() => {
+    setPlace(param.place);
+  }, []);
+
+  const onDirectionClick = () => {
+    const url = Platform.select({
+      ios:
+        "maps:" +
+        place.geometry.location.lat +
+        "," +
+        place.geometry.location.lng +
+        "?q=" +
+        place.vicinity,
+      android:
+        "geo:" +
+        place.geometry.location.lat +
+        "," +
+        place.geometry.location.lng +
+        "?q=" +
+        place.vicinity,
+    });
+
+    Linking.openURL(url);
+  };
+  return (
+    <ScrollView style={{ padding: 20, backgroundColor: Colors.WHITE, flex: 1 }}>
+      <PlaceDetailItem
+        place={place}
+        onDirectionClick={() => onDirectionClick()}
+      />
+      <GoogleMapView placeList={[place]} />
+      <TouchableOpacity
+        style={{
+          backgroundColor: Colors.PRIMARY,
+          padding: 15,
+          alignContent: "center",
+          alignItem: "center",
+          margin: 8,
+          display: "flex",
+          flexDirection: "row",
+          gap: 10,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 50,
+          paddingBottom: 15,
+        }}
+        onPress={() => onDirectionClick()}
+      >
+        <Ionicons name="navigate-circle-outline" size={30} color="white" />
+
+        <Text
+          style={{
+            textAlign: "center",
+            color: Colors.WHITE,
+          }}
+        >
+          Get Direction on Google Map
+        </Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}

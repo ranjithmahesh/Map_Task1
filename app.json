@@ -20,11 +20,32 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#ffffff",
+        "package": "com.ranjith.findplace"
+      },
+      "googleMapsApiKeys": "AIzaSyDwuvLKPYqlrxC7JBZwIk4oLPNI0XUy6RI",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
+      ],
+      "package": "com.ranjithmahesh.Map_Task"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Map_Task use your location."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2ca22128-844e-4f4e-9b42-ac8396a4f55e"
+      }
     }
   }
 }
